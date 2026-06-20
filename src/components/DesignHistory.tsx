@@ -45,6 +45,9 @@ export default function DesignHistory({ onLoadDesign, activeDesignId, refreshCou
       if (!res.ok) throw new Error("Deletion failed");
       // Local removal update
       setDesigns((prev) => prev.filter((d) => d.id !== id));
+      pendo.track('design_deleted', {
+        design_id: id,
+      });
     } catch (e: any) {
       alert("Failed to delete design: " + e.message);
     }

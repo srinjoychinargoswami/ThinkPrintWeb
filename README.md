@@ -1,4 +1,4 @@
-ipeline
+Pipeline
 
 Natural Language → Grok LLM → OpenSCAD Code → STL → 3MF (with colors) → Polyslice G-Code → Download
 

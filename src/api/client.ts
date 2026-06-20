@@ -1,17 +1,27 @@
 import axios from 'axios';
 import type { SliceSettings } from '../types';
 
-const api = axios.create({ baseURL: '/api', timeout: 60000 });
+// Get backend URL from environment variable or default to localhost
+const BACKEND_URL = (import.meta.env as any).REACT_APP_BACKEND_URL || 'http://localhost:3000';
+
+const api = axios.create({ 
+  baseURL: `${BACKEND_URL}/api`, 
+  timeout: 60000 
+});
 
 export interface GenerateResult {
   id?: string;
   prompt?: string;
   openscad: string;
-  // The existing /designs/generate endpoint returns the full design object;
-  // `code` is provided as a convenience alias by the client wrapper.
   code?: string;
-  parameters?: unknown[];
+  parameters?: Array<{
+    name: string;
+    min: number;
+    step: number;
+    max: number;
+  }>;
   createdAt?: string;
+  error?: string;
 }
 
 export interface CompileResult {
@@ -32,6 +42,9 @@ export interface SliceResult {
     filament_grams: number;
     layers: number;
   } | null;
+  slicer_used?: string;
+  printer_model?: string;
+  filament_type?: string;
   error?: string | null;
 }
 

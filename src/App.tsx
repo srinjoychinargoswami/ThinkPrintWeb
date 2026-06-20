@@ -25,7 +25,7 @@ interface LoadingState {
 }
 
 export default function App() {
-  const [prompt, setPrompt] = useState('watch with 40mm case, black case, white dial');
+  const [prompt, setPrompt] = useState('A hollow cylinder 20mm diameter, 30mm tall');
 
   // Pipeline state
   const [scadCode,   setScadCode]   = useState<string | null>(null);

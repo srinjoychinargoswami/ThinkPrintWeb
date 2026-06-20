@@ -1,0 +1,72 @@
+{
+  "id": "design_1781910236969",
+  "prompt": "watch with 40mm black case, black bezel, bright white dial, black hour makers and watch hands ",
+  "openscad": "case_dia = 40; // [20:1:80]\ncase_height = 8; // [4:0.5:15]\nbezel_height = 2; // [1:0.5:5]\ndial_dia = 34; // [15:1:70]\nmarker_len = 3; // [1:0.5:8]\nmarker_w = 1.2; // [0.5:0.1:3]\nhand_thick = 1.5; // [0.8:0.1:3]\ncrown_dia = 5; // [3:0.5:10]\n$fn = 60;\n\ncolor(\"black\")\ncylinder(d=case_dia, h=case_height);\n\ncolor(\"black\")\ntranslate([0,0,case_height])\ndifference() {\n  cylinder(d=case_dia+4, h=bezel_height);\n  cylinder(d=dial_dia+2, h=bezel_height+1);\n}\n\ncolor(\"white\")\ntranslate([0,0,case_height])\ncylinder(d=dial_dia, h=1.2);\n\ncolor(\"black\")\nfor(i=[0:11]) {\n  rotate([0,0,i*30])\n  translate([0,dial_dia/2-marker_len/2-1.5,case_height+1.2])\n  cube([marker_w,marker_len,1.2],center=true);\n}\n\ncolor(\"black\")\ntranslate([case_dia/2+1,0,case_height/2])\nrotate([90,0,0])\ncylinder(d=crown_dia,h=case_height+2,center=true);\n\ncolor(\"black\")\ntranslate([0,0,case_height+2])\nrotate([0,0,90])\nlinear_extrude(height=hand_thick)\npolygon(points=[[0,0],[8,1.5],[10,0],[8,-1.5]]);\n\ncolor(\"black\")\ntranslate([0,0,case_height+2.8])\nrotate([0,0,0])\nlinear_extrude(height=hand_thick)\npolygon(points=[[0,0],[14,1.2],[16,0],[14,-1.2]]);\n\ncolor(\"black\")\ntranslate([0,0,case_height+3.6])\ncylinder(d=3,h=1.5);",
+  "parameters": [
+    {
+      "name": "case_dia",
+      "default": 40,
+      "min": 20,
+      "max": 80,
+      "step": 1,
+      "description": "Adjustable parameter: case_dia"
+    },
+    {
+      "name": "case_height",
+      "default": 8,
+      "min": 4,
+      "max": 15,
+      "step": 0.5,
+      "description": "Adjustable parameter: case_height"
+    },
+    {
+      "name": "bezel_height",
+      "default": 2,
+      "min": 1,
+      "max": 5,
+      "step": 0.5,
+      "description": "Adjustable parameter: bezel_height"
+    },
+    {
+      "name": "dial_dia",
+      "default": 34,
+      "min": 15,
+      "max": 70,
+      "step": 1,
+      "description": "Adjustable parameter: dial_dia"
+    },
+    {
+      "name": "marker_len",
+      "default": 3,
+      "min": 1,
+      "max": 8,
+      "step": 0.5,
+      "description": "Adjustable parameter: marker_len"
+    },
+    {
+      "name": "marker_w",
+      "default": 1.2,
+      "min": 0.5,
+      "max": 3,
+      "step": 0.1,
+      "description": "Adjustable parameter: marker_w"
+    },
+    {
+      "name": "hand_thick",
+      "default": 1.5,
+      "min": 0.8,
+      "max": 3,
+      "step": 0.1,
+      "description": "Adjustable parameter: hand_thick"
+    },
+    {
+      "name": "crown_dia",
+      "default": 5,
+      "min": 3,
+      "max": 10,
+      "step": 0.5,
+      "description": "Adjustable parameter: crown_dia"
+    }
+  ],
+  "createdAt": "2026-06-19T23:03:56.969Z"
+}

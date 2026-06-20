@@ -1,0 +1,6 @@
+{
+  "name": "ThinkPrint",
+  "description": "Conversational parametric CAD designer, customizer, and slicer using OpenSCAD style syntax and real-time WebGL 3D previewing.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

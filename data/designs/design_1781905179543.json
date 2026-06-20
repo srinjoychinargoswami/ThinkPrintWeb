@@ -1,0 +1,72 @@
+{
+  "id": "design_1781905179543",
+  "prompt": "A watch with a 40mm case, white dial, with watch hands and hour markers, with a date window",
+  "openscad": "case_dia = 40; // [30:1:60]\ncase_height = 8; // [5:1:15]\ndial_dia = 34; // [25:1:55]\nbezel_height = 2; // [1:0.5:5]\nhand_length_h = 10; // [6:1:18]\nhand_length_m = 13; // [8:1:20]\nhand_length_s = 15; // [10:1:22]\ndate_window = 5; // [3:0.5:8]\n$fn = 60;\n\nmodule watch() {\n    // Case\n    color(\"silver\")\n    difference() {\n        cylinder(d=case_dia, h=case_height);\n        translate([0,0,case_height-1])\n            cylinder(d=case_dia-3, h=bezel_height+1);\n    }\n    \n    // Dial\n    color(\"white\")\n    translate([0,0,case_height-1.5])\n        cylinder(d=dial_dia, h=1.5);\n    \n    // Hour markers\n    color(\"black\")\n    for (i = [0:11]) {\n        rotate([0,0,i*30])\n            translate([dial_dia/2-4, -0.6, case_height-1.6])\n                cube([3.5, 1.2, 1.6]);\n    }\n    \n    // Date window\n    color(\"white\")\n    translate([dial_dia/2-8, -date_window/2, case_height-1.6])\n        cube([date_window+2, date_window, 1.7]);\n    color(\"black\")\n    translate([dial_dia/2-7, -1.5, case_height-1.5])\n        linear_extrude(1.6)\n            text(\"31\", size=3, halign=\"center\", valign=\"center\");\n    \n    // Hour hand\n    color(\"black\")\n    rotate([0,0,50])\n        translate([0,0,case_height-0.5])\n            linear_extrude(2)\n                polygon(points=[[0,-0.8],[hand_length_h, -0.4],[hand_length_h,0.4],[0,0.8]]);\n    \n    // Minute hand\n    color(\"black\")\n    rotate([0,0,20])\n        translate([0,0,case_height-0.3])\n            linear_extrude(2)\n                polygon(points=[[0,-0.6],[hand_length_m,-0.3],[hand_length_m,0.3],[0,0.6]]);\n    \n    // Second hand\n    color(\"red\")\n    rotate([0,0,150])\n        translate([0,0,case_height-0.1])\n            linear_extrude(2.2)\n                polygon(points=[[0,-0.3],[-2,-0.15],[-2,0.15],[hand_length_s,0.15],[hand_length_s,-0.15]]);\n}\n\nwatch();",
+  "parameters": [
+    {
+      "name": "case_dia",
+      "default": 40,
+      "min": 30,
+      "max": 60,
+      "step": 1,
+      "description": "Adjustable parameter: case_dia"
+    },
+    {
+      "name": "case_height",
+      "default": 8,
+      "min": 5,
+      "max": 15,
+      "step": 1,
+      "description": "Adjustable parameter: case_height"
+    },
+    {
+      "name": "dial_dia",
+      "default": 34,
+      "min": 25,
+      "max": 55,
+      "step": 1,
+      "description": "Adjustable parameter: dial_dia"
+    },
+    {
+      "name": "bezel_height",
+      "default": 2,
+      "min": 1,
+      "max": 5,
+      "step": 0.5,
+      "description": "Adjustable parameter: bezel_height"
+    },
+    {
+      "name": "hand_length_h",
+      "default": 10,
+      "min": 6,
+      "max": 18,
+      "step": 1,
+      "description": "Adjustable parameter: hand_length_h"
+    },
+    {
+      "name": "hand_length_m",
+      "default": 13,
+      "min": 8,
+      "max": 20,
+      "step": 1,
+      "description": "Adjustable parameter: hand_length_m"
+    },
+    {
+      "name": "hand_length_s",
+      "default": 15,
+      "min": 10,
+      "max": 22,
+      "step": 1,
+      "description": "Adjustable parameter: hand_length_s"
+    },
+    {
+      "name": "date_window",
+      "default": 5,
+      "min": 3,
+      "max": 8,
+      "step": 0.5,
+      "description": "Adjustable parameter: date_window"
+    }
+  ],
+  "createdAt": "2026-06-19T21:39:39.543Z"
+}

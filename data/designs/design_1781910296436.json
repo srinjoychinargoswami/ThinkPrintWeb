@@ -1,0 +1,88 @@
+{
+  "id": "design_1781910296436",
+  "prompt": "Clear watch case, black dial, white watch hands, date window shown in white on the black dial",
+  "openscad": "$fn = 60;\ncase_dia = 42; // [30:1:80]\ncase_thick = 9; // [6:1:15]\ndial_dia = 36; // [20:1:70]\nbezel_h = 2; // [1:0.5:4]\nhand_thick = 1.2; // [0.8:0.2:2]\ndate_w = 6; // [4:0.5:10]\ndate_h = 4; // [3:0.5:8]\nhour_len = 9; // [5:0.5:18]\nmin_len = 13; // [7:0.5:22]\nsec_len = 15; // [8:0.5:24]\nmodule watch() {\n  color([0.9,0.95,1,0.35])\n  difference() {\n    cylinder(d=case_dia,h=case_thick);\n    translate([0,0,case_thick-bezel_h])\n      cylinder(d=case_dia-3,h=bezel_h+0.1);\n  }\n  color([0.15,0.15,0.15])\n  translate([0,0,case_thick-3])\n    cylinder(d=dial_dia,h=2.5);\n  color([1,1,1])\n  translate([dial_dia/2.8,0,case_thick-1.6])\n    cube([date_w,date_h,0.8],center=true);\n  color([1,1,1])\n  translate([0,0,case_thick-0.8]) {\n    rotate([0,0,150])\n      cube([hand_thick,hour_len,1.5],center=true);\n    rotate([0,0,30])\n      cube([hand_thick*0.8,min_len,1.5],center=true);\n    rotate([0,0,240])\n      cube([hand_thick*0.4,sec_len,1.5],center=true);\n  }\n  color([0.2,0.2,0.2])\n  translate([0,0,case_thick-0.3])\n    cylinder(d=3,h=2);\n}\nwatch();",
+  "parameters": [
+    {
+      "name": "case_dia",
+      "default": 42,
+      "min": 30,
+      "max": 80,
+      "step": 1,
+      "description": "Adjustable parameter: case_dia"
+    },
+    {
+      "name": "case_thick",
+      "default": 9,
+      "min": 6,
+      "max": 15,
+      "step": 1,
+      "description": "Adjustable parameter: case_thick"
+    },
+    {
+      "name": "dial_dia",
+      "default": 36,
+      "min": 20,
+      "max": 70,
+      "step": 1,
+      "description": "Adjustable parameter: dial_dia"
+    },
+    {
+      "name": "bezel_h",
+      "default": 2,
+      "min": 1,
+      "max": 4,
+      "step": 0.5,
+      "description": "Adjustable parameter: bezel_h"
+    },
+    {
+      "name": "hand_thick",
+      "default": 1.2,
+      "min": 0.8,
+      "max": 2,
+      "step": 0.2,
+      "description": "Adjustable parameter: hand_thick"
+    },
+    {
+      "name": "date_w",
+      "default": 6,
+      "min": 4,
+      "max": 10,
+      "step": 0.5,
+      "description": "Adjustable parameter: date_w"
+    },
+    {
+      "name": "date_h",
+      "default": 4,
+      "min": 3,
+      "max": 8,
+      "step": 0.5,
+      "description": "Adjustable parameter: date_h"
+    },
+    {
+      "name": "hour_len",
+      "default": 9,
+      "min": 5,
+      "max": 18,
+      "step": 0.5,
+      "description": "Adjustable parameter: hour_len"
+    },
+    {
+      "name": "min_len",
+      "default": 13,
+      "min": 7,
+      "max": 22,
+      "step": 0.5,
+      "description": "Adjustable parameter: min_len"
+    },
+    {
+      "name": "sec_len",
+      "default": 15,
+      "min": 8,
+      "max": 24,
+      "step": 0.5,
+      "description": "Adjustable parameter: sec_len"
+    }
+  ],
+  "createdAt": "2026-06-19T23:04:56.436Z"
+}

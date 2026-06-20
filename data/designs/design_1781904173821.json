@@ -1,0 +1,16 @@
+{
+  "id": "design_1781904173821",
+  "prompt": "Make a 10x10x10 cube",
+  "openscad": "$fn = 60;\ncube_size = 10; // [5:1:100]\ncube([cube_size, cube_size, cube_size]);",
+  "parameters": [
+    {
+      "name": "cube_size",
+      "default": 10,
+      "min": 5,
+      "max": 100,
+      "step": 1,
+      "description": "Adjustable parameter: cube_size"
+    }
+  ],
+  "createdAt": "2026-06-19T21:22:53.821Z"
+}

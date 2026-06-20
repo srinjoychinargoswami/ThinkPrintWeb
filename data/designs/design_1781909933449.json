@@ -1,0 +1,64 @@
+{
+  "id": "design_1781909933449",
+  "prompt": "watch with 40mm yellow, white dial and black hands",
+  "openscad": "dial_diameter = 40; // [20:1:80]\nbezel_width = 4; // [1:0.5:10]\ncase_thickness = 6; // [3:0.5:12]\nhand_length_h = 13; // [5:1:25]\nhand_length_m = 17; // [5:1:30]\nhand_width = 1.8; // [0.5:0.2:4]\nmarker_height = 2; // [1:0.5:5]\n$fn = 60;\nmodule watch() {\n    color(\"yellow\")\n    cylinder(h=case_thickness, d=dial_diameter+bezel_width*2, center=true);\n    color(\"white\")\n    translate([0,0,case_thickness/2+0.1])\n    cylinder(h=1.5, d=dial_diameter, center=true);\n    color(\"black\")\n    for (i=[0:11]) {\n        rotate([0,0,i*30])\n        translate([0,dial_diameter/2-5,case_thickness/2+1.6])\n        cube([2.5,6,marker_height], center=true);\n    }\n    color(\"black\")\n    translate([0,0,case_thickness/2+2])\n    rotate([0,0,50])\n    linear_extrude(height=2)\n    square([hand_width,hand_length_h], center=true);\n    color(\"black\")\n    translate([0,0,case_thickness/2+2.5])\n    rotate([0,0,110])\n    linear_extrude(height=2)\n    square([hand_width,hand_length_m], center=true);\n    color(\"black\")\n    translate([0,0,case_thickness/2+3])\n    cylinder(h=3, d=2, center=true);\n}\nwatch();",
+  "parameters": [
+    {
+      "name": "dial_diameter",
+      "default": 40,
+      "min": 20,
+      "max": 80,
+      "step": 1,
+      "description": "Adjustable parameter: dial_diameter"
+    },
+    {
+      "name": "bezel_width",
+      "default": 4,
+      "min": 1,
+      "max": 10,
+      "step": 0.5,
+      "description": "Adjustable parameter: bezel_width"
+    },
+    {
+      "name": "case_thickness",
+      "default": 6,
+      "min": 3,
+      "max": 12,
+      "step": 0.5,
+      "description": "Adjustable parameter: case_thickness"
+    },
+    {
+      "name": "hand_length_h",
+      "default": 13,
+      "min": 5,
+      "max": 25,
+      "step": 1,
+      "description": "Adjustable parameter: hand_length_h"
+    },
+    {
+      "name": "hand_length_m",
+      "default": 17,
+      "min": 5,
+      "max": 30,
+      "step": 1,
+      "description": "Adjustable parameter: hand_length_m"
+    },
+    {
+      "name": "hand_width",
+      "default": 1.8,
+      "min": 0.5,
+      "max": 4,
+      "step": 0.2,
+      "description": "Adjustable parameter: hand_width"
+    },
+    {
+      "name": "marker_height",
+      "default": 2,
+      "min": 1,
+      "max": 5,
+      "step": 0.5,
+      "description": "Adjustable parameter: marker_height"
+    }
+  ],
+  "createdAt": "2026-06-19T22:58:53.450Z"
+}

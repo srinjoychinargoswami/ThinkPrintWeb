@@ -1,0 +1,88 @@
+{
+  "id": "design_1781898497852",
+  "prompt": "A watch with a 40 mm case diameter, with a white dial and black case. The hour markers are in black and the hands are black as well, make sure the hands are like typical watch hands, one smaller than the other",
+  "openscad": "$fn=60;\ncase_diameter=40;//[20:1:80]\ncase_height=6;//[3:0.5:12]\ndial_diameter=36;//[15:1:70]\nmarker_length=2.5;//[1:0.5:5]\nmarker_width=1.2;//[0.5:0.2:3]\nminute_length=14;//[5:1:30]\nminute_width=1.8;//[0.8:0.2:4]\nhour_length=9;//[3:1:20]\nhour_width=2.4;//[1:0.2:5]\nhand_height=1.5;//[0.5:0.2:4]\n\ncolor(\"black\")\ndifference(){\n  cylinder(d=case_diameter,h=case_height);\n  translate([0,0,case_height-1.5])\n    cylinder(d=dial_diameter+1,h=case_height);\n}\n\ncolor(\"white\")\ntranslate([0,0,case_height-1.5])\n  cylinder(d=dial_diameter,h=1.6);\n\ncolor(\"black\")\nfor(i=[0:11]){\n  rotate([0,0,i*30])\n    translate([dial_diameter/2-marker_length-1,0,case_height-1.4])\n      cube([marker_length,marker_width,1.6],center=true);\n}\n\nmodule watch_hand(len,wid){\n  linear_extrude(hand_height)\n    hull(){\n      circle(d=wid);\n      translate([len-wid/2,0])circle(d=wid*0.4);\n    }\n}\n\ncolor(\"black\")\ntranslate([0,0,case_height-0.1])\n  rotate([0,0,30])\n    watch_hand(minute_length,minute_width);\n\ncolor(\"black\")\ntranslate([0,0,case_height-0.1])\n  rotate([0,0,120])\n    watch_hand(hour_length,hour_width);",
+  "parameters": [
+    {
+      "name": "case_diameter",
+      "default": 40,
+      "min": 20,
+      "max": 80,
+      "step": 1,
+      "description": "Adjustable parameter: case_diameter"
+    },
+    {
+      "name": "case_height",
+      "default": 6,
+      "min": 3,
+      "max": 12,
+      "step": 0.5,
+      "description": "Adjustable parameter: case_height"
+    },
+    {
+      "name": "dial_diameter",
+      "default": 36,
+      "min": 15,
+      "max": 70,
+      "step": 1,
+      "description": "Adjustable parameter: dial_diameter"
+    },
+    {
+      "name": "marker_length",
+      "default": 2.5,
+      "min": 1,
+      "max": 5,
+      "step": 0.5,
+      "description": "Adjustable parameter: marker_length"
+    },
+    {
+      "name": "marker_width",
+      "default": 1.2,
+      "min": 0.5,
+      "max": 3,
+      "step": 0.2,
+      "description": "Adjustable parameter: marker_width"
+    },
+    {
+      "name": "minute_length",
+      "default": 14,
+      "min": 5,
+      "max": 30,
+      "step": 1,
+      "description": "Adjustable parameter: minute_length"
+    },
+    {
+      "name": "minute_width",
+      "default": 1.8,
+      "min": 0.8,
+      "max": 4,
+      "step": 0.2,
+      "description": "Adjustable parameter: minute_width"
+    },
+    {
+      "name": "hour_length",
+      "default": 9,
+      "min": 3,
+      "max": 20,
+      "step": 1,
+      "description": "Adjustable parameter: hour_length"
+    },
+    {
+      "name": "hour_width",
+      "default": 2.4,
+      "min": 1,
+      "max": 5,
+      "step": 0.2,
+      "description": "Adjustable parameter: hour_width"
+    },
+    {
+      "name": "hand_height",
+      "default": 1.5,
+      "min": 0.5,
+      "max": 4,
+      "step": 0.2,
+      "description": "Adjustable parameter: hand_height"
+    }
+  ],
+  "createdAt": "2026-06-19T19:48:17.852Z"
+}

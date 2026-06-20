@@ -1,0 +1,72 @@
+{
+  "id": "design_1781910067263",
+  "prompt": "A watch with a 40mm case, white dial, with watch hands short hour hand and longer hand with seconds hand and hour markers, with a date window",
+  "openscad": "case_diameter = 40; // [30:1:60]\ncase_thickness = 8; // [4:0.5:12]\ndial_diameter = 36; // [25:1:55]\nhand_length_hour = 10; // [5:0.5:20]\nhand_length_minute = 14; // [8:0.5:25]\nhand_length_second = 16; // [10:0.5:28]\ndate_window_size = 5; // [3:0.5:8]\nmarker_length = 2; // [1:0.5:4]\n$fn = 60;\n\nmodule watch_case() {\n    color(\"silver\")\n    difference() {\n        cylinder(d=case_diameter, h=case_thickness);\n        translate([0,0,1])\n            cylinder(d=dial_diameter+2, h=case_thickness);\n    }\n}\n\nmodule dial() {\n    color(\"white\")\n    cylinder(d=dial_diameter, h=1);\n}\n\nmodule hour_markers() {\n    color(\"black\")\n    for (i = [0:11]) {\n        rotate([0,0,i*30])\n            translate([dial_diameter/2 - marker_length - 1, -0.4, 1.01])\n                cube([marker_length, 0.8, 0.5]);\n    }\n}\n\nmodule date_window() {\n    color(\"white\")\n    translate([dial_diameter/2 - 8, 0, 1])\n        cube([date_window_size, date_window_size, 1.5], center=true);\n    color(\"black\")\n    translate([dial_diameter/2 - 8, 0, 1.5])\n        linear_extrude(0.1)\n            text(\"15\", size=2.5, halign=\"center\", valign=\"center\");\n}\n\nmodule hour_hand() {\n    color(\"black\")\n    translate([0,0,2])\n        linear_extrude(1)\n            polygon(points=[[0,-0.6],[hand_length_hour,0],[0,0.6]]);\n}\n\nmodule minute_hand() {\n    color(\"black\")\n    translate([0,0,2.5])\n        linear_extrude(1)\n            polygon(points=[[0,-0.5],[hand_length_minute,0],[0,0.5]]);\n}\n\nmodule second_hand() {\n    color(\"red\")\n    translate([0,0,3])\n        linear_extrude(0.8)\n            polygon(points=[[0,-0.3],[hand_length_second,0],[0,0.3]]);\n}\n\nmodule watch() {\n    watch_case();\n    translate([0,0,case_thickness-2])\n        dial();\n    translate([0,0,case_thickness-2])\n        hour_markers();\n    translate([0,0,case_thickness-2])\n        date_window();\n    rotate([0,0,30])\n        hour_hand();\n    rotate([0,0,150])\n        minute_hand();\n    rotate([0,0,270])\n        second_hand();\n}\n\nwatch();",
+  "parameters": [
+    {
+      "name": "case_diameter",
+      "default": 40,
+      "min": 30,
+      "max": 60,
+      "step": 1,
+      "description": "Adjustable parameter: case_diameter"
+    },
+    {
+      "name": "case_thickness",
+      "default": 8,
+      "min": 4,
+      "max": 12,
+      "step": 0.5,
+      "description": "Adjustable parameter: case_thickness"
+    },
+    {
+      "name": "dial_diameter",
+      "default": 36,
+      "min": 25,
+      "max": 55,
+      "step": 1,
+      "description": "Adjustable parameter: dial_diameter"
+    },
+    {
+      "name": "hand_length_hour",
+      "default": 10,
+      "min": 5,
+      "max": 20,
+      "step": 0.5,
+      "description": "Adjustable parameter: hand_length_hour"
+    },
+    {
+      "name": "hand_length_minute",
+      "default": 14,
+      "min": 8,
+      "max": 25,
+      "step": 0.5,
+      "description": "Adjustable parameter: hand_length_minute"
+    },
+    {
+      "name": "hand_length_second",
+      "default": 16,
+      "min": 10,
+      "max": 28,
+      "step": 0.5,
+      "description": "Adjustable parameter: hand_length_second"
+    },
+    {
+      "name": "date_window_size",
+      "default": 5,
+      "min": 3,
+      "max": 8,
+      "step": 0.5,
+      "description": "Adjustable parameter: date_window_size"
+    },
+    {
+      "name": "marker_length",
+      "default": 2,
+      "min": 1,
+      "max": 4,
+      "step": 0.5,
+      "description": "Adjustable parameter: marker_length"
+    }
+  ],
+  "createdAt": "2026-06-19T23:01:07.263Z"
+}

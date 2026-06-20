@@ -1,0 +1,40 @@
+{
+  "id": "design_1781899297347",
+  "prompt": "L-shaped wall mounting shelf bracket, 10mm thickness with 3 corner holes",
+  "openscad": "length = 80; // [50:5:150]\nwidth = 40; // [20:5:80]\nthickness = 10; // [5:1:20]\nhole_dia = 5; // [3:0.5:10]\n$fn = 60;\nmodule bracket() {\n  difference() {\n    union() {\n      cube([width, length, thickness]);\n      cube([length, width, thickness]);\n    }\n    translate([width/2, 15, -1]) cylinder(h=thickness+2, d=hole_dia);\n    translate([width/2, length-15, -1]) cylinder(h=thickness+2, d=hole_dia);\n    translate([length-15, width/2, -1]) cylinder(h=thickness+2, d=hole_dia);\n  }\n}\ncolor(\"gray\") bracket();",
+  "parameters": [
+    {
+      "name": "length",
+      "default": 80,
+      "min": 50,
+      "max": 150,
+      "step": 5,
+      "description": "Adjustable parameter: length"
+    },
+    {
+      "name": "width",
+      "default": 40,
+      "min": 20,
+      "max": 80,
+      "step": 5,
+      "description": "Adjustable parameter: width"
+    },
+    {
+      "name": "thickness",
+      "default": 10,
+      "min": 5,
+      "max": 20,
+      "step": 1,
+      "description": "Adjustable parameter: thickness"
+    },
+    {
+      "name": "hole_dia",
+      "default": 5,
+      "min": 3,
+      "max": 10,
+      "step": 0.5,
+      "description": "Adjustable parameter: hole_dia"
+    }
+  ],
+  "createdAt": "2026-06-19T20:01:37.347Z"
+}

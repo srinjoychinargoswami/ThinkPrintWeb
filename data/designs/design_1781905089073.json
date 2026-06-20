@@ -1,0 +1,24 @@
+{
+  "id": "design_1781905089073",
+  "prompt": "Make a cylinder 20mm diameter, 30mm tall",
+  "openscad": "diameter = 20; // [5:1:50]\nheight = 30; // [10:1:100]\n$fn = 60;\ncylinder(d = diameter, h = height, center = false);",
+  "parameters": [
+    {
+      "name": "diameter",
+      "default": 20,
+      "min": 5,
+      "max": 50,
+      "step": 1,
+      "description": "Adjustable parameter: diameter"
+    },
+    {
+      "name": "height",
+      "default": 30,
+      "min": 10,
+      "max": 100,
+      "step": 1,
+      "description": "Adjustable parameter: height"
+    }
+  ],
+  "createdAt": "2026-06-19T21:38:09.073Z"
+}

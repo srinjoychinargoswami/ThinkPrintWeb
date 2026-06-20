@@ -1,0 +1,24 @@
+{
+  "id": "design_1781904608506",
+  "prompt": "Make a hollow box 20x20x20mm with 2mm walls",
+  "openscad": "outer_size = 20; // [10:1:100]\nwall_thickness = 2; // [0.5:0.5:5]\n$fn = 60;\ninner_size = outer_size - 2 * wall_thickness;\ninner_height = outer_size - wall_thickness;\ndifference() {\n  cube([outer_size, outer_size, outer_size]);\n  translate([wall_thickness, wall_thickness, wall_thickness])\n    cube([inner_size, inner_size, inner_height]);\n}",
+  "parameters": [
+    {
+      "name": "outer_size",
+      "default": 20,
+      "min": 10,
+      "max": 100,
+      "step": 1,
+      "description": "Adjustable parameter: outer_size"
+    },
+    {
+      "name": "wall_thickness",
+      "default": 2,
+      "min": 0.5,
+      "max": 5,
+      "step": 0.5,
+      "description": "Adjustable parameter: wall_thickness"
+    }
+  ],
+  "createdAt": "2026-06-19T21:30:08.506Z"
+}

@@ -1,0 +1,88 @@
+{
+  "id": "design_1781898376301",
+  "prompt": "A watch with a 40 mm case diameter, with a white dial and black case. The hour markers are in black and the hands are black as well",
+  "openscad": "$fn = 60;\ncase_diameter = 40; // [30:1:60]\ncase_height = 8; // [5:1:15]\ndial_diameter = 36; // [28:1:58]\ndial_thickness = 2; // [1:0.5:4]\nmarker_length = 3; // [2:0.5:6]\nmarker_width = 1.5; // [1:0.5:3]\nhand_length_h = 10; // [6:1:18]\nhand_length_m = 14; // [8:1:20]\nhand_width = 1.2; // [0.8:0.2:2.5]\nhand_thickness = 1.5; // [0.5:0.5:3]\n\ncolor(\"black\")\ncylinder(h=case_height, d=case_diameter, center=true);\n\ntranslate([0,0,case_height/2])\ncolor(\"white\")\ncylinder(h=dial_thickness, d=dial_diameter, center=true);\n\nfor (i = [0:11]) {\n    angle = i * 30;\n    rotate([0,0,angle])\n    translate([dial_diameter/2 - marker_length/2 - 1, 0, case_height/2 + dial_thickness/2 + 0.1])\n    color(\"black\")\n    cube([marker_length, marker_width, dial_thickness], center=true);\n}\n\ntranslate([0,0,case_height/2 + dial_thickness + 0.2])\ncolor(\"black\")\ncube([hand_length_h, hand_width, hand_thickness], center=true);\n\ntranslate([0,0,case_height/2 + dial_thickness + 0.2])\nrotate([0,0,120])\ncolor(\"black\")\ncube([hand_length_m, hand_width, hand_thickness], center=true);",
+  "parameters": [
+    {
+      "name": "case_diameter",
+      "default": 40,
+      "min": 30,
+      "max": 60,
+      "step": 1,
+      "description": "Adjustable parameter: case_diameter"
+    },
+    {
+      "name": "case_height",
+      "default": 8,
+      "min": 5,
+      "max": 15,
+      "step": 1,
+      "description": "Adjustable parameter: case_height"
+    },
+    {
+      "name": "dial_diameter",
+      "default": 36,
+      "min": 28,
+      "max": 58,
+      "step": 1,
+      "description": "Adjustable parameter: dial_diameter"
+    },
+    {
+      "name": "dial_thickness",
+      "default": 2,
+      "min": 1,
+      "max": 4,
+      "step": 0.5,
+      "description": "Adjustable parameter: dial_thickness"
+    },
+    {
+      "name": "marker_length",
+      "default": 3,
+      "min": 2,
+      "max": 6,
+      "step": 0.5,
+      "description": "Adjustable parameter: marker_length"
+    },
+    {
+      "name": "marker_width",
+      "default": 1.5,
+      "min": 1,
+      "max": 3,
+      "step": 0.5,
+      "description": "Adjustable parameter: marker_width"
+    },
+    {
+      "name": "hand_length_h",
+      "default": 10,
+      "min": 6,
+      "max": 18,
+      "step": 1,
+      "description": "Adjustable parameter: hand_length_h"
+    },
+    {
+      "name": "hand_length_m",
+      "default": 14,
+      "min": 8,
+      "max": 20,
+      "step": 1,
+      "description": "Adjustable parameter: hand_length_m"
+    },
+    {
+      "name": "hand_width",
+      "default": 1.2,
+      "min": 0.8,
+      "max": 2.5,
+      "step": 0.2,
+      "description": "Adjustable parameter: hand_width"
+    },
+    {
+      "name": "hand_thickness",
+      "default": 1.5,
+      "min": 0.5,
+      "max": 3,
+      "step": 0.5,
+      "description": "Adjustable parameter: hand_thickness"
+    }
+  ],
+  "createdAt": "2026-06-19T19:46:16.302Z"
+}

@@ -1,0 +1,72 @@
+{
+  "id": "design_1781910572867",
+  "prompt": "A watch case that 40mm in diameter clear case, watch dial is all black with White watch hands, 3 hands, 20mm, 15mm and 25mm long",
+  "openscad": "watch_diameter = 40; // [30:1:60]\ncase_height = 8; // [4:1:15]\ndial_thickness = 2; // [1:0.5:4]\nhand_width = 1.5; // [0.5:0.5:3]\nhour_hand_length = 15; // [8:1:25]\nminute_hand_length = 20; // [10:1:30]\nsecond_hand_length = 25; // [12:1:35]\nbezel_thickness = 3; // [1:0.5:6]\n$fn = 60;\n\nmodule watch_case() {\n    difference() {\n        cylinder(d=watch_diameter+bezel_thickness*2, h=case_height);\n        translate([0,0,case_height-dial_thickness])\n            cylinder(d=watch_diameter, h=dial_thickness+0.1);\n        translate([0,0,-0.1])\n            cylinder(d=watch_diameter-4, h=case_height);\n    }\n}\n\nmodule dial() {\n    color(\"black\")\n    cylinder(d=watch_diameter-2, h=dial_thickness);\n}\n\nmodule hand(length, w) {\n    color(\"white\")\n    translate([0,0,dial_thickness+0.1])\n        linear_extrude(height=1.5)\n            polygon(points=[\n                [-w/2,0],\n                [w/2,0],\n                [w/4,length],\n                [-w/4,length]\n            ]);\n}\n\nmodule watch() {\n    watch_case();\n    dial();\n    // hour hand (15mm at ~3 o'clock)\n    rotate([0,0,90])\n        hand(hour_hand_length, hand_width);\n    // minute hand (20mm at 12 o'clock)\n    hand(minute_hand_length, hand_width*0.8);\n    // second hand (25mm at 6 o'clock)\n    rotate([0,0,180])\n        hand(second_hand_length, hand_width*0.6);\n}\n\nwatch();",
+  "parameters": [
+    {
+      "name": "watch_diameter",
+      "default": 40,
+      "min": 30,
+      "max": 60,
+      "step": 1,
+      "description": "Adjustable parameter: watch_diameter"
+    },
+    {
+      "name": "case_height",
+      "default": 8,
+      "min": 4,
+      "max": 15,
+      "step": 1,
+      "description": "Adjustable parameter: case_height"
+    },
+    {
+      "name": "dial_thickness",
+      "default": 2,
+      "min": 1,
+      "max": 4,
+      "step": 0.5,
+      "description": "Adjustable parameter: dial_thickness"
+    },
+    {
+      "name": "hand_width",
+      "default": 1.5,
+      "min": 0.5,
+      "max": 3,
+      "step": 0.5,
+      "description": "Adjustable parameter: hand_width"
+    },
+    {
+      "name": "hour_hand_length",
+      "default": 15,
+      "min": 8,
+      "max": 25,
+      "step": 1,
+      "description": "Adjustable parameter: hour_hand_length"
+    },
+    {
+      "name": "minute_hand_length",
+      "default": 20,
+      "min": 10,
+      "max": 30,
+      "step": 1,
+      "description": "Adjustable parameter: minute_hand_length"
+    },
+    {
+      "name": "second_hand_length",
+      "default": 25,
+      "min": 12,
+      "max": 35,
+      "step": 1,
+      "description": "Adjustable parameter: second_hand_length"
+    },
+    {
+      "name": "bezel_thickness",
+      "default": 3,
+      "min": 1,
+      "max": 6,
+      "step": 0.5,
+      "description": "Adjustable parameter: bezel_thickness"
+    }
+  ],
+  "createdAt": "2026-06-19T23:09:32.867Z"
+}

@@ -1,0 +1,48 @@
+{
+  "id": "design_1781894859190",
+  "prompt": "L-shaped wall mounting shelf bracket, 10mm thickness with 3 corner holes",
+  "openscad": "$fn = 60;\narm_length = 80; // [40:5:150]\narm_width = 40; // [20:5:80]\nthickness = 10; // [5:1:20]\nhole_dia = 5; // [3:1:10]\nhole_offset = 15; // [8:1:30]\n\nmodule bracket() {\n  difference() {\n    union() {\n      // horizontal arm\n      cube([arm_length, arm_width, thickness]);\n      // vertical arm\n      cube([thickness, arm_width, arm_length]);\n    }\n    // hole 1 - far end horizontal\n    translate([arm_length - hole_offset, arm_width/2, -1])\n      cylinder(h = thickness + 2, d = hole_dia);\n    // hole 2 - upper vertical\n    translate([-1, arm_width/2, arm_length - hole_offset])\n      rotate([0, 90, 0])\n        cylinder(h = thickness + 2, d = hole_dia);\n    // hole 3 - lower vertical corner\n    translate([-1, arm_width/2, hole_offset + thickness])\n      rotate([0, 90, 0])\n        cylinder(h = thickness + 2, d = hole_dia);\n  }\n}\n\ncolor(\"gray\") bracket();",
+  "parameters": [
+    {
+      "name": "arm_length",
+      "default": 80,
+      "min": 40,
+      "max": 150,
+      "step": 5,
+      "description": "Adjustable parameter: arm_length"
+    },
+    {
+      "name": "arm_width",
+      "default": 40,
+      "min": 20,
+      "max": 80,
+      "step": 5,
+      "description": "Adjustable parameter: arm_width"
+    },
+    {
+      "name": "thickness",
+      "default": 10,
+      "min": 5,
+      "max": 20,
+      "step": 1,
+      "description": "Adjustable parameter: thickness"
+    },
+    {
+      "name": "hole_dia",
+      "default": 5,
+      "min": 3,
+      "max": 10,
+      "step": 1,
+      "description": "Adjustable parameter: hole_dia"
+    },
+    {
+      "name": "hole_offset",
+      "default": 15,
+      "min": 8,
+      "max": 30,
+      "step": 1,
+      "description": "Adjustable parameter: hole_offset"
+    }
+  ],
+  "createdAt": "2026-06-19T18:47:39.190Z"
+}

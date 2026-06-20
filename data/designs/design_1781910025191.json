@@ -1,0 +1,80 @@
+{
+  "id": "design_1781910025191",
+  "prompt": "A watch with a 40mm case, white dial, with watch hands and hour markers, with a date window",
+  "openscad": "$fn=60;\ncase_dia=40; // [20:1:80]\ncase_height=8; // [4:1:15]\ndial_dia=34; // [15:1:70]\nbezel_height=2; // [0.5:0.5:5]\nhand_thick=1.2; // [0.5:0.2:3]\nhour_len=9; // [4:1:20]\nminute_len=13; // [6:1:25]\nsecond_len=15; // [8:1:25]\ndate_size=5; // [3:1:10]\nunion(){\ncolor(\"silver\") difference(){\ncylinder(d=case_dia,h=case_height);\ntranslate([0,0,case_height-bezel_height]) cylinder(d=case_dia-3,h=bezel_height+0.1);\ntranslate([0,0,case_height-1]) cylinder(d=dial_dia+1,h=2);\n}\ncolor(\"white\") translate([0,0,case_height-bezel_height]) cylinder(d=dial_dia,h=1.5);\nfor(i=[0:11]){\nrotate([0,0,i*30]) translate([dial_dia/2-3,0,case_height-bezel_height+1.6]) color(\"black\") cube([3,1.2,1.2],center=true);\n}\ncolor(\"black\") translate([date_size/2+3,0,case_height-bezel_height+1.6]) cube([date_size,date_size,1.2],center=true);\ncolor(\"black\") translate([date_size/2+3,0,case_height-bezel_height+2.8]) linear_extrude(0.6) text(\"15\",size=2.5,halign=\"center\",valign=\"center\");\ncolor(\"black\") rotate([0,0,300]) translate([0,0,case_height-bezel_height+2.5]) cube([hand_thick,hour_len,1.5],center=true);\ncolor(\"black\") rotate([0,0,40]) translate([0,0,case_height-bezel_height+2.7]) cube([hand_thick*0.8,minute_len,1.3],center=true);\ncolor(\"red\") rotate([0,0,180]) translate([0,0,case_height-bezel_height+2.9]) cube([hand_thick*0.5,second_len,1.1],center=true);\n}",
+  "parameters": [
+    {
+      "name": "case_dia",
+      "default": 40,
+      "min": 20,
+      "max": 80,
+      "step": 1,
+      "description": "Adjustable parameter: case_dia"
+    },
+    {
+      "name": "case_height",
+      "default": 8,
+      "min": 4,
+      "max": 15,
+      "step": 1,
+      "description": "Adjustable parameter: case_height"
+    },
+    {
+      "name": "dial_dia",
+      "default": 34,
+      "min": 15,
+      "max": 70,
+      "step": 1,
+      "description": "Adjustable parameter: dial_dia"
+    },
+    {
+      "name": "bezel_height",
+      "default": 2,
+      "min": 0.5,
+      "max": 5,
+      "step": 0.5,
+      "description": "Adjustable parameter: bezel_height"
+    },
+    {
+      "name": "hand_thick",
+      "default": 1.2,
+      "min": 0.5,
+      "max": 3,
+      "step": 0.2,
+      "description": "Adjustable parameter: hand_thick"
+    },
+    {
+      "name": "hour_len",
+      "default": 9,
+      "min": 4,
+      "max": 20,
+      "step": 1,
+      "description": "Adjustable parameter: hour_len"
+    },
+    {
+      "name": "minute_len",
+      "default": 13,
+      "min": 6,
+      "max": 25,
+      "step": 1,
+      "description": "Adjustable parameter: minute_len"
+    },
+    {
+      "name": "second_len",
+      "default": 15,
+      "min": 8,
+      "max": 25,
+      "step": 1,
+      "description": "Adjustable parameter: second_len"
+    },
+    {
+      "name": "date_size",
+      "default": 5,
+      "min": 3,
+      "max": 10,
+      "step": 1,
+      "description": "Adjustable parameter: date_size"
+    }
+  ],
+  "createdAt": "2026-06-19T23:00:25.191Z"
+}

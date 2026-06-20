@@ -1,0 +1,80 @@
+{
+  "id": "design_1781909904980",
+  "prompt": "watch with 40mm yellow, white dial and black hands",
+  "openscad": "$fn = 60;\ndial_diameter = 40; // [20:1:80]\ncase_height = 6; // [3:0.5:12]\nbezel_width = 4; // [1:0.5:8]\nhand_thickness = 1.2; // [0.5:0.1:3]\nhour_hand_length = 12; // [5:1:25]\nminute_hand_length = 16; // [8:1:30]\nsecond_hand_length = 17; // [8:1:30]\nstrap_width = 20; // [10:1:30]\nstrap_length = 50; // [20:5:80]\ncolor_case = \"gray\";\ncolor_dial = \"white\";\ncolor_bezel = \"yellow\";\ncolor_hands = \"black\";\nunion() {\n  color(color_case)\n  difference() {\n    cylinder(h=case_height, d=dial_diameter+bezel_width*2, center=true);\n    translate([0,0,case_height/2-1])\n      cylinder(h=case_height, d=dial_diameter+1, center=true);\n  }\n  color(color_dial)\n  cylinder(h=case_height-1, d=dial_diameter, center=true);\n  color(color_bezel)\n  difference() {\n    cylinder(h=case_height-0.5, d=dial_diameter+bezel_width, center=true);\n    cylinder(h=case_height, d=dial_diameter-2, center=true);\n  }\n  for (i=[0:11]) {\n    rotate([0,0,i*30])\n      translate([dial_diameter/2-3,0,case_height/2-0.2])\n        color(\"black\")\n        cube([4,1.5,0.6], center=true);\n  }\n  color(color_hands)\n  translate([0,0,case_height/2+0.5]) {\n    rotate([0,0,30])\n      linear_extrude(height=1.5)\n        polygon(points=[[0,-hand_thickness/2],[hour_hand_length,-hand_thickness/4],[hour_hand_length,hand_thickness/4],[0,hand_thickness/2]]);\n    rotate([0,0,120])\n      linear_extrude(height=1.5)\n        polygon(points=[[0,-hand_thickness/2],[minute_hand_length,-hand_thickness/4],[minute_hand_length,hand_thickness/4],[0,hand_thickness/2]]);\n    rotate([0,0,200])\n      cylinder(h=2, d=0.8, center=false);\n  }\n  color(color_case) {\n    translate([-dial_diameter/2-bezel_width-strap_length, -strap_width/2, -case_height/2])\n      cube([strap_length, strap_width, 3]);\n    translate([dial_diameter/2+bezel_width, -strap_width/2, -case_height/2])\n      cube([strap_length, strap_width, 3]);\n  }\n}",
+  "parameters": [
+    {
+      "name": "dial_diameter",
+      "default": 40,
+      "min": 20,
+      "max": 80,
+      "step": 1,
+      "description": "Adjustable parameter: dial_diameter"
+    },
+    {
+      "name": "case_height",
+      "default": 6,
+      "min": 3,
+      "max": 12,
+      "step": 0.5,
+      "description": "Adjustable parameter: case_height"
+    },
+    {
+      "name": "bezel_width",
+      "default": 4,
+      "min": 1,
+      "max": 8,
+      "step": 0.5,
+      "description": "Adjustable parameter: bezel_width"
+    },
+    {
+      "name": "hand_thickness",
+      "default": 1.2,
+      "min": 0.5,
+      "max": 3,
+      "step": 0.1,
+      "description": "Adjustable parameter: hand_thickness"
+    },
+    {
+      "name": "hour_hand_length",
+      "default": 12,
+      "min": 5,
+      "max": 25,
+      "step": 1,
+      "description": "Adjustable parameter: hour_hand_length"
+    },
+    {
+      "name": "minute_hand_length",
+      "default": 16,
+      "min": 8,
+      "max": 30,
+      "step": 1,
+      "description": "Adjustable parameter: minute_hand_length"
+    },
+    {
+      "name": "second_hand_length",
+      "default": 17,
+      "min": 8,
+      "max": 30,
+      "step": 1,
+      "description": "Adjustable parameter: second_hand_length"
+    },
+    {
+      "name": "strap_width",
+      "default": 20,
+      "min": 10,
+      "max": 30,
+      "step": 1,
+      "description": "Adjustable parameter: strap_width"
+    },
+    {
+      "name": "strap_length",
+      "default": 50,
+      "min": 20,
+      "max": 80,
+      "step": 5,
+      "description": "Adjustable parameter: strap_length"
+    }
+  ],
+  "createdAt": "2026-06-19T22:58:24.980Z"
+}

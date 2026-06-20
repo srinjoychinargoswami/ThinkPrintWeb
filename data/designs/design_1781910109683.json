@@ -1,0 +1,24 @@
+{
+  "id": "design_1781910109683",
+  "prompt": "A watch with a 40mm case, white dial, with watch hands and hour markers, with a date window",
+  "openscad": "case_dia = 40; // [30:1:60]\ncase_height = 9; // [6:1:15]\ndial_thickness = 1.5;\nmarker_height = 1.2;\nhand_thick = 1.2;\ndate_win_w = 6;\ndate_win_h = 4;\nhour_angle = 300;\nminute_angle = 40;\nsecond_angle = 150;\n$fn = 60;\n\nmodule watch_case() {\n    color(\"silver\")\n    difference() {\n        cylinder(d=case_dia+4, h=case_height);\n        translate([0,0,1.5])\n            cylinder(d=case_dia, h=case_height);\n    }\n    color(\"silver\")\n    translate([0,0,case_height-1.5])\n        cylinder(d=case_dia+2, h=1.5);\n}\n\nmodule dial() {\n    color(\"white\")\n    cylinder(d=case_dia-2, h=dial_thickness);\n}\n\nmodule hour_markers() {\n    color(\"black\")\n    for (i = [0:11]) {\n        rotate([0,0,i*30])\n            translate([case_dia/2-5, -0.6, dial_thickness])\n                cube([4, 1.2, marker_height]);\n    }\n}\n\nmodule date_window() {\n    color(\"white\")\n    translate([case_dia/2-9, -date_win_h/2, dial_thickness-0.1])\n        cube([date_win_w, date_win_h, 1]);\n    color(\"black\")\n    translate([case_dia/2-8.5, -1.2, dial_thickness+0.3])\n        linear_extrude(0.8)\n            text(\"31\", size=2.8, font=\"Arial\");\n}\n\nmodule hands() {\n    // hour hand\n    color(\"black\")\n    rotate([0,0,hour_angle])\n        translate([-1.5, -hand_thick/2, dial_thickness+0.1])\n            cube([case_dia/2-10, hand_thick, 1]);\n    // minute hand\n    color(\"black\")\n    rotate([0,0,minute_angle])\n        translate([-1.2, -hand_thick/2, dial_thickness+0.2])\n            cube([case_dia/2-7, hand_thick, 1]);\n    // second hand\n    color(\"red\")\n    rotate([0,0,second_angle])\n        translate([-1, -0.4, dial_thickness+0.3])\n            cube([case_dia/2-6, 0.8, 0.8]);\n    // center pin\n    color(\"black\")\n    translate([0,0,dial_thickness+0.4])\n        cylinder(d=2.5, h=1.5);\n}\n\nunion() {\n    watch_case();\n    translate([0,0,1.5])\n        dial();\n    translate([0,0,1.5])\n        hour_markers();\n    translate([0,0,1.5])\n        date_window();\n    translate([0,0,1.5])\n        hands();\n}",
+  "parameters": [
+    {
+      "name": "case_dia",
+      "default": 40,
+      "min": 30,
+      "max": 60,
+      "step": 1,
+      "description": "Adjustable parameter: case_dia"
+    },
+    {
+      "name": "case_height",
+      "default": 9,
+      "min": 6,
+      "max": 15,
+      "step": 1,
+      "description": "Adjustable parameter: case_height"
+    }
+  ],
+  "createdAt": "2026-06-19T23:01:49.683Z"
+}

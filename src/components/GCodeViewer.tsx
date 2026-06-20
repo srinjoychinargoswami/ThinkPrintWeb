@@ -41,6 +41,11 @@ export default function GCodeViewer({
       await navigator.clipboard.writeText(gcode);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
+      pendo.track('gcode_copied_to_clipboard', {
+        content_length: gcode.length,
+        printer_model: printerModel || '',
+        slicer_used: slicerUsed || '',
+      });
     } catch { /* clipboard unavailable */ }
   };
 

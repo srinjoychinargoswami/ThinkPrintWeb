@@ -45,7 +45,17 @@ export default function ParametersPanel({
     if (debounceRef.current) clearTimeout(debounceRef.current);
     debounceRef.current = setTimeout(() => {
       const updated = updateParameterInCode(scadCode, param.name, raw);
-      if (updated !== scadCode) onCodeChange(updated);
+      if (updated !== scadCode) {
+        onCodeChange(updated);
+        pendo.track('parameter_adjusted', {
+          parameter_name: param.name,
+          parameter_label: param.label,
+          new_value: raw,
+          min: param.min,
+          max: param.max,
+          step: param.step,
+        });
+      }
     }, 400);
   };
 

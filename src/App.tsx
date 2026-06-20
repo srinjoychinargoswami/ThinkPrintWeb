@@ -63,6 +63,13 @@ export default function App() {
       if (data.error) throw new Error(data.error);
       setScadCode(data.openscad);
       setDesign(data);
+      pendo.track('design_generated', {
+        prompt: prompt.substring(0, 200),
+        design_id: data.id || '',
+        parameter_count: data.parameters?.length || 0,
+        code_length: data.openscad?.length || 0,
+        created_at: data.createdAt || '',
+      });
     } catch (e: any) {
       setError(e?.response?.data?.error || e?.message || 'Generation failed');
     } finally {
@@ -85,6 +92,13 @@ export default function App() {
       setStlBase64(data.stl);
       setCompileStats(data.stats);
       setActiveTab('stl');
+      pendo.track('openscad_compiled', {
+        vertices: data.stats?.vertices || 0,
+        faces: data.stats?.faces || 0,
+        file_size_bytes: data.stats?.fileSize || 0,
+        compilation_time_seconds: data.stats?.compilationTime || 0,
+        code_length: code.length,
+      });
     } catch (e: any) {
       setError(e?.response?.data?.error || e?.message || 'Compilation failed');
     } finally {
@@ -104,6 +118,12 @@ export default function App() {
       if (data.error || !data['3mf']) throw new Error(data.error || '3MF conversion returned no data');
       setMf3Base64(data['3mf']);
       setActiveTab('3mf');
+      pendo.track('stl_converted_to_3mf', {
+        color_count: (scadCode || '').match(/color\s*\(/g)?.length || 0,
+        vertices: compileStats?.vertices || 0,
+        faces: compileStats?.faces || 0,
+        file_size_bytes: Math.ceil(data['3mf'].length * 3 / 4),
+      });
     } catch (e: any) {
       setError(e?.response?.data?.error || e?.message || '3MF conversion failed');
     } finally {
@@ -127,6 +147,19 @@ export default function App() {
       setSlicerUsed(data.slicer_used);
       setPrinterModel(data.printer_model);
       setFilamentType(data.filament_type);
+      pendo.track('model_sliced', {
+        printer_model: data.printer_model || '',
+        layer_height: settings.layer_height || 0,
+        infill_density: settings.infill_density || 0,
+        wall_line_count: settings.wall_line_count || 0,
+        support_enabled: !!settings.support_enabled,
+        print_time_minutes: data.stats?.print_time_minutes || 0,
+        filament_grams: data.stats?.filament_grams || 0,
+        layers: data.stats?.layers || 0,
+        filament_length_mm: data.stats?.filament_length_mm || 0,
+        slicer_used: data.slicer_used || '',
+        filament_type: data.filament_type || '',
+      });
     } catch (e: any) {
       setError(e?.response?.data?.error || e?.message || 'Slicing failed');
     } finally {
@@ -143,16 +176,49 @@ export default function App() {
     URL.revokeObjectURL(url);
   };
 
-  const handleDownloadStl  = () => stlBase64  && downloadFile(stlBase64,  'model.stl',  'model/stl');
-  const handleDownloadMf3  = () => mf3Base64  && downloadFile(mf3Base64,  'model.3mf',  'application/vnd.ms-package.3dmanufacturing-3dmodel+xml');
-  const handleDownloadCode = () => scadCode   && (() => {
+  const handleDownloadStl = () => {
+    if (!stlBase64) return;
+    downloadFile(stlBase64, 'model.stl', 'model/stl');
+    pendo.track('file_downloaded', {
+      file_type: 'stl',
+      file_name: 'model.stl',
+      file_size_bytes: Math.ceil(stlBase64.length * 3 / 4),
+      mime_type: 'model/stl',
+    });
+  };
+  const handleDownloadMf3 = () => {
+    if (!mf3Base64) return;
+    downloadFile(mf3Base64, 'model.3mf', 'application/vnd.ms-package.3dmanufacturing-3dmodel+xml');
+    pendo.track('file_downloaded', {
+      file_type: '3mf',
+      file_name: 'model.3mf',
+      file_size_bytes: Math.ceil(mf3Base64.length * 3 / 4),
+      mime_type: 'application/vnd.ms-package.3dmanufacturing-3dmodel+xml',
+    });
+  };
+  const handleDownloadCode = () => {
+    if (!scadCode) return;
     const url = URL.createObjectURL(new Blob([scadCode], { type: 'text/plain' }));
-    const a   = document.createElement('a'); a.href = url; a.download = 'model.scad'; a.click(); URL.revokeObjectURL(url);
-  })();
-  const handleDownloadGcode = () => gcode && (() => {
+    const a = document.createElement('a'); a.href = url; a.download = 'model.scad'; a.click(); URL.revokeObjectURL(url);
+    pendo.track('file_downloaded', {
+      file_type: 'scad',
+      file_name: 'model.scad',
+      file_size_bytes: scadCode.length,
+      mime_type: 'text/plain',
+    });
+  };
+  const handleDownloadGcode = () => {
+    if (!gcode) return;
+    const filename = `design_${Date.now()}.gcode`;
     const url = URL.createObjectURL(new Blob([gcode], { type: 'text/plain' }));
-    const a   = document.createElement('a'); a.href = url; a.download = `design_${Date.now()}.gcode`; a.click(); URL.revokeObjectURL(url);
-  })();
+    const a = document.createElement('a'); a.href = url; a.download = filename; a.click(); URL.revokeObjectURL(url);
+    pendo.track('file_downloaded', {
+      file_type: 'gcode',
+      file_name: filename,
+      file_size_bytes: gcode.length,
+      mime_type: 'text/plain',
+    });
+  };
 
   // Load a saved design
   const handleLoadDesign = (d: CADDesign) => {
@@ -162,6 +228,12 @@ export default function App() {
     setStlBase64(null); setMf3Base64(null);
     setGcode(''); setGcodeStats(null);
     setError(null);
+    pendo.track('design_loaded_from_history', {
+      design_id: d.id,
+      prompt: d.prompt.substring(0, 200),
+      parameter_count: d.parameters?.length || 0,
+      design_created_at: d.createdAt || '',
+    });
   };
 
   const anyLoading = Object.values(loading).some(Boolean);

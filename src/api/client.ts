@@ -2,7 +2,7 @@ import axios from 'axios';
 import type { SliceSettings } from '../types';
 
 // Get backend URL from environment variable or default to localhost
-const BACKEND_URL = (import.meta.env as any).REACT_APP_BACKEND_URL || 'thinkprintweb-production.up.railway.app';
+const BACKEND_URL = (import.meta.env as any).REACT_APP_BACKEND_URL || 'https://thinkprintweb.onrender.com';
 
 const api = axios.create({ 
   baseURL: `${BACKEND_URL}/api`, 

@@ -15,23 +15,61 @@ interface SliceSettingsProps {
   loading: boolean;
 }
 
-// 44 printers available in Polyslice — subset shown in UI
+// All 50+ printers supported by Polyslice v26.4
 const PRINTER_OPTIONS = [
+  // Creality Ender Series
   "Ender3",
   "Ender3V2",
   "Ender3Pro",
   "Ender3S1",
   "Ender5",
-  "PrusaI3MK3S",
-  "PrusaMini",
-  "PrusaXL",
+  "Ender6",
+  // Creality CR Series
   "CR10",
   "CR10S5",
+  "CR6SE",
+  // Creality K Series
+  "CrealityK1",
+  "CrealityK1Max",
+  // Prusa Research
+  "PrusaI3MK3S",
+  "PrusaMini",
+  "PrusaMK4",
+  "PrusaXL",
+  // Bambu Lab
+  "BambuLabX1Carbon",
+  "BambuLabP1P",
+  "BambuLabA1",
+  "BambuLabA1Mini",
+  // Anycubic
   "AnycubicI3Mega",
+  "AnycubicKobra",
+  "AnycubicVyper",
+  // Elegoo
+  "ElegooNeptune3",
+  "ElegooNeptune3Pro",
+  "ElegooNeptune4",
+  "ElegooNeptune4Pro",
+  // Artillery
   "ArtillerySidewinderX1",
+  "ArtillerySidewinderX2",
+  "ArtilleryGenius",
+  // Sovol
+  "SovolSV06",
+  "SovolSV06Plus",
+  // Other Manufacturers
+  "Voron24",
   "UltimakerS5",
   "FlashForgeCreatorPro",
+  "FlashforgeAdventurer3",
   "Raise3DPro2",
+  "MakerbotReplicatorPlus",
+  "QidiXPlus",
+  "MonopriceSelectMiniV2",
+  "LulzBotMini2",
+  "LulzBotTAZ6",
+  "KingroonKP3S",
+  "AnkerMakeM5",
 ];
 
 export default function SliceSettings({ stlBase64, onSlice, loading }: SliceSettingsProps) {
@@ -73,7 +111,7 @@ export default function SliceSettings({ stlBase64, onSlice, loading }: SliceSett
 
       {/* Printer selector */}
       <div className="space-y-1.5">
-        <label className="text-xs text-slate-400 font-medium font-mono">Printer Model</label>
+        <label className="text-xs text-slate-400 font-medium font-mono">Printer Model ({PRINTER_OPTIONS.length}+ supported)</label>
         <div className="relative">
           <select
             value={printerModel}

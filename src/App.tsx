@@ -44,9 +44,44 @@ export default function App() {
   const [loading, setLoading] = useState<LoadingState>({ generate: false, compile: false, convert: false, slice: false });
 
   const [activeTab, setActiveTab] = useState<'stl' | '3mf'>('stl');
+  const [refreshCount, setRefreshCount] = useState(0);
 
   const setLoad = (key: keyof LoadingState, val: boolean) =>
     setLoading((l) => ({ ...l, [key]: val }));
+
+  // ── Helper: Save design to personal localStorage history ──────────────────
+  const saveDesignToPersonal = (design: any) => {
+    if (!design.id) return; // Guard against missing ID
+    try {
+      const history = JSON.parse(localStorage.getItem('thinkprintweb_personal_designs') || '[]');
+      const exists = history.some((d: CADDesign) => d.id === design.id);
+      if (!exists) {
+        history.unshift(design);
+        localStorage.setItem('thinkprintweb_personal_designs', JSON.stringify(history));
+        setRefreshCount((c) => c + 1); // Trigger DesignHistory refresh
+      }
+    } catch (e) {
+      console.error('Failed to save design to personal history:', e);
+    }
+  };
+
+  // ── Helper: Full reset ────────────────────────────────────────────────────
+  const handleFullReset = () => {
+    if (!confirm('Clear all current work? This will reset the entire pipeline.')) return;
+    setPrompt('A hollow cylinder 20mm diameter, 30mm tall');
+    setScadCode(null);
+    setStlBase64(null);
+    setMf3Base64(null);
+    setGcode('');
+    setGcodeStats(null);
+    setSlicerUsed(undefined);
+    setPrinterModel(undefined);
+    setFilamentType(undefined);
+    setDesign(null);
+    setCompileStats(null);
+    setError(null);
+    setActiveTab('stl');
+  };
 
   // ── Step 1: Generate OpenSCAD via Grok ──────────────────────────────────────
   const handleGenerate = async () => {
@@ -63,6 +98,8 @@ export default function App() {
       if (data.error) throw new Error(data.error);
       setScadCode(data.openscad);
       setDesign(data);
+      // AUTO-SAVE TO PERSONAL HISTORY
+      saveDesignToPersonal(data);
     } catch (e: any) {
       setError(e?.response?.data?.error || e?.message || 'Generation failed');
     } finally {
@@ -183,6 +220,13 @@ export default function App() {
           <div className="flex items-center gap-2 text-[10px] font-mono text-slate-500">
             <span className="px-2 py-0.5 rounded-full border border-orange-800 bg-orange-950/30 text-orange-400">Polyslice v26.4</span>
             <span className="px-2 py-0.5 rounded-full border border-indigo-800 bg-indigo-950/30 text-indigo-400">Grok API</span>
+            <button
+              onClick={handleFullReset}
+              className="ml-4 px-2.5 py-0.5 rounded-full border border-red-800 bg-red-950/20 hover:bg-red-950/40 text-red-400 hover:text-red-300 transition font-semibold text-[10px] flex items-center gap-1"
+              title="Reset all work"
+            >
+              <Trash2 className="h-3 w-3" /> Reset
+            </button>
           </div>
         </div>
       </header>
@@ -366,7 +410,11 @@ export default function App() {
 
         {/* ── Design History ────────────────────────────────────────── */}
         <section>
-          <DesignHistory onSelectDesign={handleLoadDesign} />
+          <DesignHistory 
+            onLoadDesign={handleLoadDesign}
+            activeDesignId={design?.id ?? null}
+            refreshCount={refreshCount}
+          />
         </section>
 
       </div>

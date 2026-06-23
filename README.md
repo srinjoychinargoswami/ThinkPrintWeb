@@ -1,3 +1,7 @@
+To access the tool: https://thinkprintweb.onrender.com/ 
+
+No Setup required, just go to the webstie and start designing your own designs
+
 Pipeline
 
 Natural Language → Grok LLM → OpenSCAD Code → STL → 3MF (with colors) → Polyslice G-Code → Download

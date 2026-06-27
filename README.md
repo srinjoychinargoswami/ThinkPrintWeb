@@ -142,6 +142,6 @@ XAI_API_KEY=your-grok-api-key-from-x-ai
 See .env.example for template.
 
 License: 
-ThinkPrintWeb code is licensed under the MIT License.
+ThinkPrintWeb code is licensed under the Apache 2.0 License.
 
 **Note:** This project uses [openscad-wasm](https://github.com/openscad/openscad-wasm) which is licensed under GPL v2. See [OpenSCAD License](https://github.com/openscad/openscad-wasm/blob/main/LICENSE) for details.
